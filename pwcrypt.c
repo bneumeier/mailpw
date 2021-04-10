@@ -248,21 +248,17 @@ char *chomp_crlf(char *str, size_t size)
 
 int is_valid_for_salt(char c)
 {
-	/*
-         * from "man 5 crypt", we see the hashed passphrase format:
-	 * [./0-9A-Za-z]
-         */
+	/* from "man 5 crypt", we see the hashed passphrase format:
+	 * [./0-9A-Za-z] */
 	if (c == '.') {
 		return c;
 	}
 	if (c == '/') {
 		return c;
 	}
-	/*
-         * the standard LibC "isalnum()" results may depend upon the locale
+	/* the standard LibC "isalnum()" results may depend upon the locale
 	 * ( see: https://www.cplusplus.com/reference/cctype/isalnum/ )
-	 * thus do it by hand
-         */
+	 * thus do it by hand */
 	if (c >= 'A' && c <= 'Z') {
 		return c;
 	}
