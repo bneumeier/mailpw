@@ -58,7 +58,8 @@ int pwcrypt(int confirm, const char *type, const char *algorithm,
 	    const char *user_salt, FILE *out,
 	    char *(*fgets_func)(char *buf, int size, FILE *tty), FILE *tty)
 {
-	/* The salt_buf_size is arbitrary, but user_salt may also contain
+	/*
+         * The salt_buf_size is arbitrary, but user_salt may also contain
 	 * "rounds" or other data. From man crypt_r:
 	 *
 	 * Since glibc 2.7, the SHA-256 and SHA-512 implementations
@@ -90,7 +91,7 @@ int pwcrypt(int confirm, const char *type, const char *algorithm,
 	/* data->initialized = 0; */
 	memset(&data, 0x00, sizeof(struct crypt_data));
 
-	// TODO: use madvise with MADV_DONTDUMP, MADV_WIPEONFORK
+	/* TODO: use madvise with MADV_DONTDUMP, MADV_WIPEONFORK */
 	const size_t plaintext_passphrase_size = 1024;
 	char plaintext_passphrase[plaintext_passphrase_size];
 	char plaintext_passphrase2[plaintext_passphrase_size];
@@ -243,17 +244,21 @@ char *chomp_crlf(char *str, size_t size)
 
 int is_valid_for_salt(char c)
 {
-	/* from "man 5 crypt", we see the hashed passphrase format:
-	 * [./0-9A-Za-z] */
+	/*
+         * from "man 5 crypt", we see the hashed passphrase format:
+	 * [./0-9A-Za-z]
+         */
 	if (c == '.') {
 		return c;
 	}
 	if (c == '/') {
 		return c;
 	}
-	/* the standard LibC "isalnum()" results may depend upon the locale
+	/*
+         * the standard LibC "isalnum()" results may depend upon the locale
 	 * ( see: https://www.cplusplus.com/reference/cctype/isalnum/ )
-	 * thus do it by hand */
+	 * thus do it by hand
+         */
 	if (c >= 'A' && c <= 'Z') {
 		return c;
 	}
