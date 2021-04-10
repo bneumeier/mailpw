@@ -264,7 +264,7 @@ void pwcrypt_parse_options(int *help, int *version, int *confirm,
 	assert(argc);
 	assert(argv);
 
-	/* omg, optstirng is horrible */
+	/* omg, optstring is horrible */
 	const char *optstring = "hvct::a::s::";
 	struct option long_options[] = {
 		{ "help", no_argument, 0, 'h' },
