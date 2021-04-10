@@ -9,12 +9,12 @@ sub change_instance_passwds {
     my %user_instances;
 
     foreach my $instance ( keys %{$instances} ) {
-        foreach my $pwf ( @{ $instances->{$instance} } ) {
-            print( $pwf, "\n" );
-            open( my $in, '<', $pwf ) or die "$pwf: $!";
+        foreach my $pwfile ( @{ $instances->{$instance} } ) {
+            print( $pwfile, "\n" );
+            open( my $in, '<', $pwfile ) or die "$pwfile: $!";
             while (<$in>) {
                 if (/^$user[: ]/) {
-                    push @{ $user_instances{$instance} }, $pwf;
+                    push @{ $user_instances{$instance} }, $pwfile;
                 }
             }
             close($in);
